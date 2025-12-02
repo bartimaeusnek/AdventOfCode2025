@@ -47,14 +47,11 @@ std::vector<int64_t> NumberComperator::compare_part_one(const int64_t a, const i
    return invalidNumbers;
 }
 
-static void find_recursive(const std::string& pattern, const std::string& input, const size_t search_from, std::vector<size_t>& hits, const size_t recursion_guard)
-{
+static void find_recursive(const std::string& pattern, const std::string& input, const size_t search_from, size_t& hits, const size_t recursion_guard) {
     if (search_from >= input.size() || recursion_guard >= 128) return;
 
-    if (const size_t hit = input.find(pattern, search_from); hit != std::string::npos) {
-        hits.push_back(hit);
-        find_recursive(pattern, input, hit + 1, hits, recursion_guard + 1);
-    }
+    if (const size_t hit = input.find(pattern, search_from); hit != std::string::npos)
+        find_recursive(pattern, input, hit + 1, ++hits, recursion_guard + 1);
 }
 
 static bool isOnlyPattern(const std::string& input, const std::string& pattern) {
@@ -75,14 +72,12 @@ std::unordered_set<int64_t> NumberComperator::compare_part_two(const int64_t a, 
 
         for (int j = 0; j < input.length(); ++j) {
             pattern += input[j];
-            if (!isOnlyPattern(input, pattern))
-                continue;
+            if (!isOnlyPattern(input, pattern)) continue;
 
-            std::vector<size_t> hits;
+            size_t hits = 0;
             find_recursive(pattern, input, 0, hits, 0);
-            if (hits.size() > 1) {
-                invalidNumbers.emplace(i);
-            }
+            if (hits > 1) invalidNumbers.emplace(i);
+
         }
     }
     return invalidNumbers;
