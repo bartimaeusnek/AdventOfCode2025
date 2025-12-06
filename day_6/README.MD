@@ -1,0 +1,2 @@
+# --- Day 6: Trash Compactor ---
+This day was not hard. It was annoying to get right tho. Writing this in a language that im fairly new in, made it harder than it needed to be, but i was able to finish it in roughly an hour.
